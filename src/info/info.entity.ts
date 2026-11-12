@@ -9,7 +9,8 @@ export enum ContactType {
   kGitHub      = "github",
   kTelegram    = "telegram",
   kViber       = "viber",
-  kGravatar    = "gravatar"
+  kGravatar    = "gravatar",
+  kGoogleMeet  = "calendly"
 }
 
 @Entity()
