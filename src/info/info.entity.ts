@@ -50,6 +50,9 @@ export class InfoContact {
 
   @Column()
   url: string;
+
+  @Column()
+  internalId: string;
   
   @ManyToOne(() => Info, (info) => info.contacts)
   info: Info;
