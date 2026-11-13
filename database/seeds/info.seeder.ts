@@ -1,8 +1,7 @@
 import { HttpClient } from '@nestjs/http-client'
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
-import { DataSource } from 'typeorm';
+import { DataSource, type QueryDeepPartialEntity } from 'typeorm';
 import { ContactType, Info, InfoContact } from '../../src/info/info.entity.js';
-import { group } from 'console';
 
 type Profile = {
     hash: string;
@@ -31,7 +30,7 @@ type Profile = {
     }    
 }
 
-export default class UserSeeder implements Seeder {
+export default class InfoSeeder implements Seeder {
     private readonly profileId  = process.env.GRAVATAR_PROFILE ?? ''
     private readonly profileUrl = `/profiles/${encodeURIComponent(this.profileId)}`
 
@@ -43,8 +42,8 @@ export default class UserSeeder implements Seeder {
         }
     })
 
-    private static groupAndFlatten<Item>(items: Item[], property: string): Record<string, Item> {
-        const grouped = Object.groupBy(items, item => (<any>item)[property] as string);
+    private static groupAndFlatten<Item>(items: Item[], property: keyof Item): Record<string, Item> {
+        const grouped = Object.groupBy(items, item => item[property] as string);
         const entries = Object.entries(grouped);
 
         return Object.fromEntries(entries.map(([group, items]) => [group, items![0]]));
@@ -52,13 +51,13 @@ export default class UserSeeder implements Seeder {
     
     public async run(dataSource: DataSource, _: SeederFactoryManager): Promise<any> {
         const { gravatar, profileUrl, profileId } = this
-        const { groupAndFlatten } = UserSeeder
+        const { groupAndFlatten } = InfoSeeder
         
         const info_repo = dataSource.getRepository(Info);
         const { data: profile } = await gravatar.get<Profile>(profileUrl)
 
-        info_repo.upsert({
-            id: 1,
+        await info_repo.upsert({
+            id:       1,
             fullName: profile.display_name,
             title:    profile.job_title,
             location: profile.location,
@@ -81,62 +80,64 @@ export default class UserSeeder implements Seeder {
         const github_id = grouped_accounts['github'].url
             .replace('https://github.com/', '')
 
-        contact_repo.upsert([{
+        const fkey: QueryDeepPartialEntity<InfoContact> = { info: { id: 1 }}
+
+        await contact_repo.upsert([{
             id:         1,
             type:       ContactType.kEmail,
             account:    contact_info.email,
             url:        `mailto:${contact_info.email}`,
             internalId: contact_info.email,
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         2,
             type:       ContactType.kPhone,
             account:    contact_info.cell_phone,
             url:        `tel:${contact_info.cell_phone}`,
             internalId: contact_info.cell_phone,
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         3,
             type:       ContactType.kLinkedIn,
             account:    linkedin_id,
             url:        grouped_accounts['linkedin'].url,
             internalId: linkedin_id.replace('in/', ''),
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         4,
             type:       ContactType.kUpWork,
             account:    upwork_id,
             url:        grouped_links['Upwork'].url,
             internalId: upwork_id,
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         5,
             type:       ContactType.kGitHub,
             account:    github_id,
             url:        grouped_accounts['github'].url,
             internalId: github_id,
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         6,
             type:       ContactType.kTelegram,
             account:    '@oleksii_serdiukov_86',
             url:        'https://t.me/oleksii_serdiukov_86',
             internalId: 'oleksii_serdiukov_86',
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         7,
             type:       ContactType.kGravatar,
             account:    profileId,
             url:        profile.profile_url,
             internalId: profile.hash,
-            info:       { id: 1 }
+            ...fkey
         },{
             id:         8,
             type:       ContactType.kGoogleMeet,
             account:    profileId,
             url:        contact_info.calendar,
             internalId: profileId,
-            info:       { id: 1 }    
+            ...fkey
         }], ['id'])
     }
 }
