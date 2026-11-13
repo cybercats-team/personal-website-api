@@ -310,11 +310,11 @@ export default class CareerSeeder implements Seeder {
 
     const fk: QueryDeepPartialEntity<CompanyProject> = { company: { id }};
 
-    const projecsObservables = company.projects.map((project, idx) => defer(async () =>
+    const projectsObservables = company.projects.map((project, idx) => defer(async () =>
       this.seedProject(dataSource, project, 10 * id + idx, fk)
     ))
     
-    await lastValueFrom(concat(...projecsObservables))  
+    await lastValueFrom(concat(...projectsObservables))  
   }
 
   private async seedProject(dataSource: DataSource, project: ProjectData, id: number, fk: QueryDeepPartialEntity<CompanyProject>): Promise<void> {    
