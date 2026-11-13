@@ -86,19 +86,19 @@ export default class SectionSeeder implements Seeder {
     ]
   }]
 
-  private async seedSection(dataSource: DataSource, section: SectionData, index: number): Promise<void> {    
+  private async seedSection(dataSource: DataSource, section: SectionData, id: number): Promise<void> {    
     const section_repo = dataSource.getRepository(Section);
 
     await section_repo.upsert({
-      id:    index + 1,
+      id,
       title: section.section
     }, ["id"]);
 
     const point_repo = dataSource.getRepository(SectionPoint);
-    const fk: QueryDeepPartialEntity<SectionPoint> = { section: { id: index + 1 }};
+    const fk: QueryDeepPartialEntity<SectionPoint> = { section: { id }};
 
     await point_repo.upsert(section.points.map((point, idx) => ({
-      id: idx + 20 * (index + 1),
+      id: idx + 20 * id,
       content: point,
       ...fk
     })), ["id"]);
@@ -106,7 +106,7 @@ export default class SectionSeeder implements Seeder {
 
   public async run(dataSource: DataSource, _: SeederFactoryManager): Promise<any> {
     const seedObservables = this.data.map((section, index) => defer(async () =>
-      this.seedSection(dataSource, section, index)
+      this.seedSection(dataSource, section, index + 1)
     ))
     
     await lastValueFrom(concat(...seedObservables))    
