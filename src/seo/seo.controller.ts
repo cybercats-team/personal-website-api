@@ -16,7 +16,7 @@ export class SeoController {
     const webpagePath = path ? path.join('/') : '/';
     const seoTags = await this.service.getByPath(webpagePath);
 
-    if (null == seoTags) {
+    if (null === seoTags) {
       throw new NotFoundException();
     }
 

@@ -10,7 +10,13 @@ export class InfoService {
     private repository: Repository<Info>,
   ) {}
 
-  getHello(): string {
-    return 'Hello World!';
+  async getInfo(): Promise<Info | null> {
+    const [info = null] = await this.repository.find({
+      relations: {
+        contacts: true
+      }
+    });
+
+    return info;
   }
 }
