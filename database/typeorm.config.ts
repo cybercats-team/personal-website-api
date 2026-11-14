@@ -2,7 +2,11 @@ import { DataSource, type DataSourceOptions } from 'typeorm';
 import { type SeederOptions } from 'typeorm-extension';
 import GetSharedConfig from '../src/config/database.config.shared.js';
 
-process.loadEnvFile();
+try { 
+  process.loadEnvFile();
+} catch {
+  console.warn('No .env file found. Using environment variables instead.')
+}
 
 const options: DataSourceOptions & SeederOptions = {
   ...GetSharedConfig(),
