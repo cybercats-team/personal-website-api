@@ -10,7 +10,7 @@ export class SeoService {
     private repository: Repository<Seo>,
   ) {}
   
-  getHello(): string {
-    return 'Hello World!';
+  async getByPath(path: string): Promise<Seo | null> {
+    return this.repository.findOneBy({ path })
   }
 }
