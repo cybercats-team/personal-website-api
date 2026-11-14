@@ -10,7 +10,13 @@ export class CareerService {
     private repository: Repository<Company>,
   ) {}
 
-  getHello(): string {
-    return 'Hello World!';
+  async getAllCareers(): Promise<Company[]> {
+    return this.repository.find({
+      relations: {
+        projects: {
+          tasks: true
+        }
+      }
+    });
   }
 }

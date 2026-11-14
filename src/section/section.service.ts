@@ -10,7 +10,11 @@ export class SectionService {
     private repository: Repository<Section>,
   ) {}
 
-  getHello(): string {
-    return 'Hello World!';
+  async getAllSections(): Promise<Section[]> {
+    return this.repository.find({
+      relations: {
+        points: true
+      }
+    });
   }
 }
