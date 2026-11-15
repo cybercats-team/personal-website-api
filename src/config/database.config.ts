@@ -1,5 +1,5 @@
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { join } from 'node:path';
+import { existsSync } from 'node:fs';
 import { registerAs } from '@nestjs/config';
 import Database from 'better-sqlite3'
 import GetSharedConfig from './database.config.shared.js';
@@ -14,15 +14,15 @@ export default registerAs('database', () => {
     existsSync(join(process.cwd(),  'var',  'database.sqlite'));
 
     vercelConfig = {
-      driver: Database as any,
       // database: '/var/task/var/database.sqlite',
-      extra: { readonly: true, fileMustExist: true }
+      //extra: { readonly: true, fileMustExist: true }
     };
   }
   
   return {
     ...sharedConfig,    
     ...vercelConfig,
+    driver: Database as any,
     autoLoadEntities: true
   }
 });
