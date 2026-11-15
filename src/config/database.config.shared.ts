@@ -5,5 +5,13 @@ export default (forCli: boolean = false): DataSourceOptions => {
   const readonly = "true" == (process.env.DATABASE_READONLY ?? 'false')
 
   console.info({ 'Using database path': database, 'R/O': readonly });
-  return { database, readonly, type: 'better-sqlite3', synchronize: false };
+  return { 
+    database, 
+    type: 'better-sqlite3', 
+    synchronize: false,
+    extra: {
+      readonly,
+      fileMustExist: readonly
+    }
+  };
 }
