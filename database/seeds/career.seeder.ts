@@ -23,7 +23,7 @@ export default class CareerSeeder implements Seeder {
       "timeline": "Aug 2021 - Oct 2026",
       "projects": [
         {
-          "summary": "ERCC (Endpoint Risk & Compliance Control) Windows application",
+          "summary": "Windows security application",
           "role": "Architect, Team Lead, Senior C++ Developer, Senior NodeJS Developer, React Tech Consultant",
           "stack": "C++/Win32/gRPC/NodeJS, React/TanStack/Zustand",
           "tasks": [
