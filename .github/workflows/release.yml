@@ -1,0 +1,27 @@
+name: Release Develop to Master
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@://github.com"
+
+      - name: Merge develop into master
+        run: |
+          git checkout master
+          git merge origin/develop --no-ff -m "chore(release): merge develop into master"
+          git push origin master
