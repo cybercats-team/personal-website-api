@@ -1,7 +1,18 @@
 {
-  "functions": {
-    "**/*": {
-      "includeFiles": "var/database.sqlite"
+  "buildCommand": "sh vercel-build.sh",
+  "builds": [
+    {
+      "src": "dist/main.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["var/database.sqlite"]
+      }
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/main.js"
+    }
+  ]
 }
