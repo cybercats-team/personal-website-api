@@ -1,15 +1,7 @@
 import type { DataSourceOptions } from 'typeorm';
 
-export default (): DataSourceOptions => {  
-  const readOnly = 'true' == (process.env.DATABASE_READONLY ?? 'false');
-
-  return { 
-    database: 'var/database.sqlite', 
-    type: 'better-sqlite3', 
-    synchronize: false,
-    extra: {
-      readonly: readOnly,
-      fileMustExist: readOnly
-    }
-  };
-}
+export default (): DataSourceOptions => ({ 
+  database: 'var/database.sqlite', 
+  type: 'better-sqlite3', 
+  synchronize: false
+})
