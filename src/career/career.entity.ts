@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Company {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column()
@@ -17,7 +17,7 @@ export class Company {
 
 @Entity()
 export class CompanyProject {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column()
@@ -38,9 +38,9 @@ export class CompanyProject {
 
 @Entity()
 export class ProjectTask {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
-
+  
   @Column()
   content: string;
 

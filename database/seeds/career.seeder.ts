@@ -300,9 +300,7 @@ export default class CareerSeeder implements Seeder {
   ];
 
   private async seedCompany(dataSource: DataSource, company: CompanyData, id: number): Promise<void> {    
-    const section_repo = dataSource.getRepository(Company);
-
-    await section_repo.upsert({
+    await dataSource.getRepository(Company).upsert({
       id,
       title: company.company,
       timeline: company.timeline
@@ -318,9 +316,7 @@ export default class CareerSeeder implements Seeder {
   }
 
   private async seedProject(dataSource: DataSource, project: ProjectData, id: number, fk: QueryDeepPartialEntity<CompanyProject>): Promise<void> {    
-    const section_repo = dataSource.getRepository(CompanyProject);
-
-    await section_repo.upsert({
+    await dataSource.getRepository(CompanyProject).upsert({
       id,
       summary: project.summary,
       role: project.role,
@@ -332,7 +328,7 @@ export default class CareerSeeder implements Seeder {
     const task_fk: QueryDeepPartialEntity<ProjectTask> = { project: { id }};
 
     await point_repo.upsert(project.tasks.map((task, idx) => ({
-      id: idx + 10 * id,
+      id: 10 * id + idx,
       content: task,
       ...task_fk
     })), ["id"]);

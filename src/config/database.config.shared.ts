@@ -1,7 +1,7 @@
 import type { DataSourceOptions } from 'typeorm';
 
 export default (): DataSourceOptions => ({ 
-  database: 'var/database.sqlite', 
-  type: 'better-sqlite3', 
+  url: process.env.DATABASE_URL ?? '',
+  type: 'postgres', 
   synchronize: false
 })

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from 'typeorm';
 
 export enum ContactType {
   kUnspecified = "",
@@ -15,7 +15,7 @@ export enum ContactType {
 
 @Entity()
 export class Info {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column()
@@ -36,11 +36,11 @@ export class Info {
 
 @Entity()
 export class InfoContact {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column({
-    type:    "simple-enum",
+    type:    "enum",
     enum:    ContactType,
     default: ContactType.kUnspecified,
   })
