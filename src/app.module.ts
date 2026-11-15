@@ -6,7 +6,7 @@ import databaseConfig from './config/database.config.js';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [databaseConfig] }),
-    TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
+    TypeOrmModule.forRoot(databaseConfig()),
   ],
 })
 export class AppModule {}
