@@ -15,7 +15,7 @@ export default registerAs('database', () => {
 
     vercelConfig = {
       driver: Database as any,
-      database: '/var/task/var/database.sqlite',
+      // database: '/var/task/var/database.sqlite',
       extra: { readonly: true, fileMustExist: true }
     };
   }
