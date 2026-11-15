@@ -1,13 +1,7 @@
 {
   "functions": {
-    "dist/main.js": {
+    "src/main.ts": {
       "includeFiles": "var/database.sqlite"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/dist/main.js"
-    }
-  ]
+  }
 }
