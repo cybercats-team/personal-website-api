@@ -1,7 +1,7 @@
 {
   "functions": {
-    "src/main.ts": {
-      "includeFiles": "dist/**/*.sqlite"
+    "**/*": {
+      "includeFiles": "var/database.sqlite"
     }
   }
 }
