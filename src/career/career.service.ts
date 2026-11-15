@@ -12,6 +12,15 @@ export class CareerService {
 
   async getAllCareers(): Promise<Company[]> {
     return this.repository.find({
+      order: {
+        id: "ASC",
+        projects: {
+          id: "ASC",
+          tasks: {
+            id: "ASC"
+          }
+        }
+      },
       relations: {
         projects: {
           tasks: true

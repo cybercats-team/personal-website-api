@@ -12,6 +12,12 @@ export class SectionService {
 
   async getAllSections(): Promise<Section[]> {
     return this.repository.find({
+      order: {
+        id: "ASC",
+        points: {
+          id: "ASC"
+        }
+      },
       relations: {
         points: true
       }
