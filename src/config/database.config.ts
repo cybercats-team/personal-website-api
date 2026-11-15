@@ -5,5 +5,5 @@ import GetSharedConfig from './database.config.shared.js';
 export default registerAs('database', () => ({
   ...GetSharedConfig(),
   driver: Database as any,
-  autoLoadEntities: true,
+  autoLoadEntities: true
 }));
