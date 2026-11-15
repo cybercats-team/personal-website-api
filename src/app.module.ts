@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import databaseConfig from './config/database.config.js';
+import * as pg from 'pg';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot(databaseConfig()),
-  ],
+  imports: [TypeOrmModule.forRoot({
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    driver: pg,
+    autoLoadEntities: true,
+    synchronize: false,
+  })],
 })
 export class AppModule {}
 
