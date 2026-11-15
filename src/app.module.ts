@@ -1,4 +1,17 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import databaseConfig from './config/database.config.js';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, load: [databaseConfig] }),
+    TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
+  ],
+})
+export class AppModule {}
+
+/*import databaseConfig from './config/database.config.js';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -57,3 +70,4 @@ import { Company, CompanyProject, ProjectTask } from './career/career.entity.js'
   ],
 })
 export class AppModule {}
+*/
