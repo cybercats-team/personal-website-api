@@ -1,4 +1,4 @@
-import * as pg from 'pg';
+import pg from 'pg';
 import { registerAs } from '@nestjs/config';
 import GetSharedConfig from './database.config.shared.js';
 
