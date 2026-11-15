@@ -1,6 +1,6 @@
 {
   "functions": {
-    "/index": {
+    "dist/main.js": {
       "includeFiles": "var/database.sqlite"
     }
   }
