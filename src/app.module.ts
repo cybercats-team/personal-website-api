@@ -1,19 +1,4 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as pg from 'pg';
-
-@Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    driver: pg,
-    autoLoadEntities: true,
-    synchronize: false,
-  })],
-})
-export class AppModule {}
-
-/*import databaseConfig from './config/database.config.js';
+import databaseConfig from './config/database.config.js';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -72,4 +57,3 @@ import { Company, CompanyProject, ProjectTask } from './career/career.entity.js'
   ],
 })
 export class AppModule {}
-*/
