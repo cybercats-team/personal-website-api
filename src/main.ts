@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as pg from 'pg';
 import { Controller, Get, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
@@ -8,7 +10,16 @@ class TestController {
   test() { return 'ok'; }
 }
 
-@Module({ controllers: [TestController] })
+@Module({
+  imports: [TypeOrmModule.forRoot({
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    driver: pg,
+    autoLoadEntities: true,
+    synchronize: false,
+  })],
+  controllers: [TestController],
+})
 class TestModule {}
 
 async function bootstrap() {
