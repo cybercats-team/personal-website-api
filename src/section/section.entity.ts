@@ -8,6 +8,9 @@ export class Section {
   @Column()
   title: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  slug: string | null;
+
   @OneToMany(() => SectionPoint, (point) => point.section)
   points: SectionPoint[];
 }
