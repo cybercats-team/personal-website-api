@@ -3,11 +3,12 @@ import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { DataSource, type QueryDeepPartialEntity } from 'typeorm';
 import { Section, SectionPoint } from '../../src/section/section.entity.js';
 
-type SectionData = { section: string; points: string[] }
+type SectionData = { section: string; slug: string; points: string[] }
 
 export default class SectionSeeder implements Seeder {
   private data: SectionData[] = [{
     section: "EXPERTISE",
+    slug: "expertise",
     points: [
       "21 years of experience as a software engineer",
       "16 years as full-stack developer at Web",
@@ -20,6 +21,7 @@ export default class SectionSeeder implements Seeder {
     ]
   }, {
     section: "TECH STACKS",
+    slug: "tech-stacks",
     points: [
       "Full-stack: MEAN / MERN => since 2015",
       "Frontend: Angular => since 2015",
@@ -32,6 +34,7 @@ export default class SectionSeeder implements Seeder {
     ]
   }, {
     section: "TECH SKILLS",
+    slug: "tech-skills",
     points: [
       "Languages: C/C++, JavaScript/TypeScript, Java, Swift, Bash/PowerShell/Python scripting",
       "Methodology: OOP, FP, DRY/KISS, GOF patterns, MVC, MVP, BDD, TDD",
@@ -49,6 +52,7 @@ export default class SectionSeeder implements Seeder {
     ]
   }, {
     section: "ARCHITECTURE",
+    slug: "architecture",
     points: [
       "Best practices suggested by certain framework/library/technology stack",
       "For OOP-based frameworks: SOLID at design, GoF patterns at implementation",
@@ -62,6 +66,7 @@ export default class SectionSeeder implements Seeder {
     ]
   }, {
     section: "LEADERSHIP",
+    slug: "leadership",
     points: [
       "Small teams (up to 5-6 people) management experience",
       "Typical team setup (vary for different projects): 2-3 frontend devs, 1-2 backend devs, qa, devops, project/domain-specific roles (like protocol developer on crypto project)",
@@ -77,6 +82,7 @@ export default class SectionSeeder implements Seeder {
     ]
   }, {
     section: "I OFFER",
+    slug: "offer",
     points: [
       "Team lead/architect/senior developer at Your project (full-time, remote) - from $4K monthly",
       "Tech consultant/senior developer at Your project (half-time, remote) - from $2K monthly",
@@ -91,7 +97,8 @@ export default class SectionSeeder implements Seeder {
 
     await section_repo.upsert({
       id,
-      title: section.section
+      title: section.section,
+      slug: section.slug,
     }, ["id"]);
 
     const point_repo = dataSource.getRepository(SectionPoint);
